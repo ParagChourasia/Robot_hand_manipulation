@@ -1,0 +1,156 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- ============================= ROS2 CONTROL CONFIGURATION ============================= -->
+
+  <xacro:macro name="manipulation_ros2_control" params="use_sim:=true">
+
+    <ros2_control name="ManipulatorSystem" type="system">
+      
+      <!-- Hardware Interface -->
+      <hardware>
+        <xacro:if value="${use_sim}">
+          <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+        </xacro:if>
+        <xacro:unless value="${use_sim}">
+          <plugin>ur_robot_driver/URPositionHardwareInterface</plugin>
+        </xacro:unless>
+      </hardware>
+
+      <!-- UR5e Arm Joints -->
+      <joint name="shoulder_pan_joint">
+        <command_interface name="position">
+          <param name="min">-6.28318530718</param>
+          <param name="max">6.28318530718</param>
+        </command_interface>
+        <command_interface name="velocity">
+          <param name="min">-3.14159265359</param>
+          <param name="max">3.14159265359</param>
+        </command_interface>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+        <state_interface name="effort"/>
+      </joint>
+
+      <joint name="shoulder_lift_joint">
+        <command_interface name="position">
+          <param name="min">-6.28318530718</param>
+          <param name="max">6.28318530718</param>
+        </command_interface>
+        <command_interface name="velocity"/>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+        <state_interface name="effort"/>
+      </joint>
+
+      <joint name="elbow_joint">
+        <command_interface name="position">
+          <param name="min">-3.14159265359</param>
+          <param name="max">3.14159265359</param>
+        </command_interface>
+        <command_interface name="velocity"/>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+        <state_interface name="effort"/>
+      </joint>
+
+      <joint name="wrist_1_joint">
+        <command_interface name="position">
+          <param name="min">-6.28318530718</param>
+          <param name="max">6.28318530718</param>
+        </command_interface>
+        <command_interface name="velocity"/>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+        <state_interface name="effort"/>
+      </joint>
+
+      <joint name="wrist_2_joint">
+        <command_interface name="position">
+          <param name="min">-6.28318530718</param>
+          <param name="max">6.28318530718</param>
+        </command_interface>
+        <command_interface name="velocity"/>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+        <state_interface name="effort"/>
+      </joint>
+
+      <joint name="wrist_3_joint">
+        <command_interface name="position">
+          <param name="min">-6.28318530718</param>
+          <param name="max">6.28318530718</param>
+        </command_interface>
+        <command_interface name="velocity"/>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+        <state_interface name="effort"/>
+      </joint>
+
+      <!-- Gripper Joints (main control joints) -->
+      <joint name="right_hand_Thumb_Opposition">
+        <command_interface name="position"/>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+
+      <joint name="right_hand_Thumb_Flexion">
+        <command_interface name="position"/>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+
+      <joint name="right_hand_Index_Finger_Proximal">
+        <command_interface name="position"/>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+
+      <joint name="right_hand_Index_Finger_Distal">
+        <command_interface name="position"/>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+
+      <joint name="right_hand_Middle_Finger_Proximal">
+        <command_interface name="position"/>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+
+      <joint name="right_hand_Middle_Finger_Distal">
+        <command_interface name="position"/>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+
+      <joint name="right_hand_Ring_Finger">
+        <command_interface name="position"/>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+
+      <joint name="right_hand_Pinky">
+        <command_interface name="position"/>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+
+      <joint name="right_hand_Finger_Spread">
+        <command_interface name="position"/>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+
+    </ros2_control>
+
+    <!-- Gazebo ros2_control plugin -->
+    <gazebo>
+      <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+        <parameters>$(find manipulator_control)/config/controllers.yaml</parameters>
+      </plugin>
+    </gazebo>
+
+  </xacro:macro>
+
+</robot>

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="schunk_svh_gripper">
+
+  <!-- ============================= SCHUNK SVH 5-FINGER GRIPPER ============================= -->
+  <!-- Macro to attach the gripper to a parent link (e.g., UR5e end effector) -->
+
+  <xacro:macro name="schunk_svh_hand" params="parent prefix:='' *origin">
+    
+    <!-- Connection to parent (e.g., end effector) -->
+    <joint name="${prefix}hand_mount_joint" type="fixed">
+      <xacro:insert_block name="origin"/>
+      <parent link="${parent}"/>
+      <child link="${prefix}right_hand_base_link"/>
+    </joint>
+
+    <!-- Include the original gripper structure but with updated mesh paths -->
+    <xacro:include filename="$(find manipulator_description)/urdf/schunk_svh_hand_internal.xacro"/>
+    
+  </xacro:macro>
+
+</robot>

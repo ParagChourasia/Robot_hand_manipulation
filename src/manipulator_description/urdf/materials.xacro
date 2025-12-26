@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- ==================== COLORS AND MATERIALS ==================== -->
+  
+  <!-- UR5e Colors -->
+  <material name="ur_black">
+    <color rgba="0.0 0.0 0.0 1.0"/>
+  </material>
+
+  <material name="ur_blue">
+    <color rgba="0.0 0.35 0.7 1.0"/>
+  </material>
+
+  <material name="ur_silver">
+    <color rgba="0.7 0.7 0.7 1.0"/>
+  </material>
+
+  <!-- Gripper Colors -->
+  <material name="gripper_gray">
+    <color rgba="0.5 0.5 0.5 1.0"/>
+  </material>
+
+  <material name="gripper_dark">
+    <color rgba="0.2 0.2 0.2 1.0"/>
+  </material>
+
+  <!-- Sensor Colors -->
+  <material name="camera_black">
+    <color rgba="0.1 0.1 0.1 1.0"/>
+  </material>
+
+  <material name="sensor_red">
+    <color rgba="0.8 0.1 0.1 0.8"/>
+  </material>
+
+  <!-- Table/Base Colors -->
+  <material name="table_wood">
+    <color rgba="0.6 0.4 0.2 1.0"/>
+  </material>
+
+  <material name="table_metal">
+    <color rgba="0.3 0.3 0.35 1.0"/>
+  </material>
+
+</robot>

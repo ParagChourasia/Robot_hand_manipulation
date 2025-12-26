@@ -1,0 +1,161 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- ==================== TABLE/WORKBENCH ==================== -->
+  <xacro:macro name="manipulation_table" params="table_height:=0.75 table_length:=1.5 table_width:=0.8 table_thickness:=0.05">
+    
+    <!-- World Link (fixed reference) -->
+    <link name="world"/>
+
+    <!-- Table Top Link -->
+    <link name="table_link">
+      <visual>
+        <origin xyz="0 0 ${-table_thickness/2}" rpy="0 0 0"/>
+        <geometry>
+          <box size="${table_length} ${table_width} ${table_thickness}"/>
+        </geometry>
+        <material name="table_wood"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 ${-table_thickness/2}" rpy="0 0 0"/>
+        <geometry>
+          <box size="${table_length} ${table_width} ${table_thickness}"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <mass value="50.0"/>
+        <origin xyz="0 0 ${-table_thickness/2}" rpy="0 0 0"/>
+        <inertia ixx="2.0" ixy="0.0" ixz="0.0"
+                 iyy="9.5" iyz="0.0" izz="11.0"/>
+      </inertial>
+    </link>
+
+    <!-- Fix table to world at specified height -->
+    <joint name="world_to_table" type="fixed">
+      <origin xyz="0 0 ${table_height}" rpy="0 0 0"/>
+      <parent link="world"/>
+      <child link="table_link"/>
+    </joint>
+
+    <!-- Table Legs (4 legs) -->
+    <xacro:property name="leg_radius" value="0.025"/>
+    <xacro:property name="leg_offset_x" value="${table_length/2 - 0.1}"/>
+    <xacro:property name="leg_offset_y" value="${table_width/2 - 0.1}"/>
+
+    <!-- Front Left Leg -->
+    <link name="table_leg_fl">
+      <visual>
+        <origin xyz="0 0 ${-table_height/2}" rpy="0 0 0"/>
+        <geometry>
+          <cylinder radius="${leg_radius}" length="${table_height}"/>
+        </geometry>
+        <material name="table_metal"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 ${-table_height/2}" rpy="0 0 0"/>
+        <geometry>
+          <cylinder radius="${leg_radius}" length="${table_height}"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="table_to_leg_fl" type="fixed">
+      <origin xyz="${leg_offset_x} ${leg_offset_y} ${-table_thickness}" rpy="0 0 0"/>
+      <parent link="table_link"/>
+      <child link="table_leg_fl"/>
+    </joint>
+
+    <!-- Front Right Leg -->
+    <link name="table_leg_fr">
+      <visual>
+        <origin xyz="0 0 ${-table_height/2}" rpy="0 0 0"/>
+        <geometry>
+          <cylinder radius="${leg_radius}" length="${table_height}"/>
+        </geometry>
+        <material name="table_metal"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 ${-table_height/2}" rpy="0 0 0"/>
+        <geometry>
+          <cylinder radius="${leg_radius}" length="${table_height}"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="table_to_leg_fr" type="fixed">
+      <origin xyz="${leg_offset_x} ${-leg_offset_y} ${-table_thickness}" rpy="0 0 0"/>
+      <parent link="table_link"/>
+      <child link="table_leg_fr"/>
+    </joint>
+
+    <!-- Back Left Leg -->
+    <link name="table_leg_bl">
+      <visual>
+        <origin xyz="0 0 ${-table_height/2}" rpy="0 0 0"/>
+        <geometry>
+          <cylinder radius="${leg_radius}" length="${table_height}"/>
+        </geometry>
+        <material name="table_metal"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 ${-table_height/2}" rpy="0 0 0"/>
+        <geometry>
+          <cylinder radius="${leg_radius}" length="${table_height}"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="table_to_leg_bl" type="fixed">
+      <origin xyz="${-leg_offset_x} ${leg_offset_y} ${-table_thickness}" rpy="0 0 0"/>
+      <parent link="table_link"/>
+      <child link="table_leg_bl"/>
+    </joint>
+
+    <!-- Back Right Leg -->
+    <link name="table_leg_br">
+      <visual>
+        <origin xyz="0 0 ${-table_height/2}" rpy="0 0 0"/>
+        <geometry>
+          <cylinder radius="${leg_radius}" length="${table_height}"/>
+        </geometry>
+        <material name="table_metal"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 ${-table_height/2}" rpy="0 0 0"/>
+        <geometry>
+          <cylinder radius="${leg_radius}" length="${table_height}"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="table_to_leg_br" type="fixed">
+      <origin xyz="${-leg_offset_x} ${-leg_offset_y} ${-table_thickness}" rpy="0 0 0"/>
+      <parent link="table_link"/>
+      <child link="table_leg_br"/>
+    </joint>
+
+    <!-- Gazebo properties for table -->
+    <gazebo reference="table_link">
+      <material>Gazebo/Wood</material>
+      <static>true</static>
+    </gazebo>
+
+    <gazebo reference="table_leg_fl">
+      <material>Gazebo/Grey</material>
+      <static>true</static>
+    </gazebo>
+
+    <gazebo reference="table_leg_fr">
+      <material>Gazebo/Grey</material>
+      <static>true</static>
+    </gazebo>
+
+    <gazebo reference="table_leg_bl">
+      <material>Gazebo/Grey</material>
+      <static>true</static>
+    </gazebo>
+
+    <gazebo reference="table_leg_br">
+      <material>Gazebo/Grey</material>
+      <static>true</static>
+    </gazebo>
+
+  </xacro:macro>
+
+</robot>

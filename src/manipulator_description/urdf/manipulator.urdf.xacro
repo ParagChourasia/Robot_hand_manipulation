@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="manipulation_system">
+
+  <!-- ============================= MAIN ROBOT DESCRIPTION ============================= -->
+  <!-- Complete manipulation system with UR5e + Schunk SVH + Sensors + Table -->
+
+  <!-- Include all component definitions -->
+  <xacro:include filename="$(find manipulator_description)/urdf/materials.xacro"/>
+  <xacro:include filename="$(find manipulator_description)/urdf/table.xacro"/>
+  <xacro:include filename="$(find manipulator_description)/urdf/ur5e.xacro"/>
+  <xacro:include filename="$(find manipulator_description)/urdf/schunk_svh_hand_internal.xacro"/>
+  <xacro:include filename="$(find manipulator_description)/urdf/sensors.xacro"/>
+  <xacro:include filename="$(find manipulator_description)/urdf/ros2_control.xacro"/>
+
+  <!-- ============================= BUILD THE COMPLETE SYSTEM ============================= -->
+
+  <!-- 1. Create the table/workbench -->
+  <xacro:manipulation_table/>
+
+  <!-- 2. Mount UR5e arm on table -->
+  <xacro:ur5e_robot parent="table_link">
+    <origin xyz="0 0 0.05" rpy="0 0 0"/>
+  </xacro:ur5e_robot>
+
+  <!-- 3. Attach Schunk SVH gripper to UR5e end effector -->
+  <joint name="gripper_mount_joint" type="fixed">
+    <!-- Rotate 90° around Y to align fingers with arm extension direction -->
+    <origin xyz="0 0 0" rpy="0 1.57079632679 0"/>
+    <parent link="ee_link"/>
+    <child link="right_hand_base_link"/>
+  </joint>
+
+  <!-- 4. Add depth camera to wrist -->
+  <xacro:realsense_d435i parent="wrist_3_link">
+    <!-- Mount above wrist, tilted down to view gripper workspace -->
+    <origin xyz="0.04 0 0.04" rpy="0 0.4 0"/>
+  </xacro:realsense_d435i>
+
+  <!-- 5. Add tactile sensors to all fingertips -->
+  <xacro:add_tactile_sensors/>
+
+  <!-- 6. Add ros2_control interfaces -->
+  <xacro:manipulation_ros2_control use_sim="true"/>
+
+</robot>
