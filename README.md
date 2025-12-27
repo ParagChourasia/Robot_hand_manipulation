@@ -68,18 +68,6 @@ You can also organize with visual/ and collision/ subdirectories if needed.
 **Directories:**
 - `launch/` - Complete system launch files
 
----
-
-## 🚀 Next Steps
-
-After you paste your URDF and mesh files:
-
-1. **Review URDF**: I'll verify the robot description
-2. **Configure Sensors**: Set up tactile sensors and depth camera
-3. **Setup ros2_control**: Configure joint controllers
-4. **Create Launch Files**: Build launch files for visualization and simulation
-5. **Test in RViz**: Verify robot model
-6. **Test in Gazebo**: Simulate the complete system
 
 
 ---
