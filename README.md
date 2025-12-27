@@ -81,13 +81,6 @@ After you paste your URDF and mesh files:
 5. **Test in RViz**: Verify robot model
 6. **Test in Gazebo**: Simulate the complete system
 
----
-
-## 📋 Checklist
-
-- [ ] Paste URDF files into `src/manipulator_description/urdf/`
-- [ ] Paste mesh files into `src/manipulator_description/meshes/`
-- [ ] Notify me when files are ready for verification
 
 ---
 
